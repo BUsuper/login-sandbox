@@ -16,6 +16,13 @@ const pages = {
   About: <QuestionMark />,
 };
 
+const listOfGoals = [
+  "Creating a log-in page and loggin users in",
+  "Routing",
+  "Creating protected routes",
+  "Using axios to fetch data",
+];
+
 export default function About() {
   return (
     <>
@@ -23,20 +30,31 @@ export default function About() {
       <Container>
         <Paper>
           <Typography>Purpose</Typography>
+          <Typography>It's just a sandbox to learn stuff about:</Typography>
+          <List>
+            {Object.entries(listOfGoals).map((goal) => {
+              return (
+                <ListItem key={goal[1]}>
+                  <ListItemIcon>⭐</ListItemIcon>
+                  <ListItemText primary={goal[1]} />
+                </ListItem>
+              );
+            })}
+          </List>
         </Paper>
         <Paper>
           <Typography>Contents</Typography>
           <Typography>This website has the following pages:</Typography>
-          {Object.entries(pages).map((page) => {
-            return (
-              <List>
-                <ListItem>
+          <List>
+            {Object.entries(pages).map((page) => {
+              return (
+                <ListItem key={page[0]}>
                   <ListItemIcon>{page[1]}</ListItemIcon>
                   <ListItemText primary={page[0]} />
                 </ListItem>
-              </List>
-            );
-          })}
+              );
+            })}
+          </List>
         </Paper>
       </Container>
     </>
