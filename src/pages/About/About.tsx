@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { QuestionMark, Login, Home, Api } from "@mui/icons-material";
 
-const pages = {
+const pagesIcons = {
   Home: <Home />,
   Login: <Login />,
   API: <Api />,
@@ -32,11 +32,11 @@ export default function About() {
           <Typography>Purpose</Typography>
           <Typography>It's just a sandbox to learn stuff about:</Typography>
           <List>
-            {Object.entries(listOfGoals).map((goal) => {
+            {listOfGoals.map((goal) => {
               return (
-                <ListItem key={goal[1]}>
+                <ListItem key={goal}>
                   <ListItemIcon>⭐</ListItemIcon>
-                  <ListItemText primary={goal[1]} />
+                  <ListItemText primary={goal} />
                 </ListItem>
               );
             })}
@@ -46,7 +46,7 @@ export default function About() {
           <Typography>Contents</Typography>
           <Typography>This website has the following pages:</Typography>
           <List>
-            {Object.entries(pages).map((page) => {
+            {Object.entries(pagesIcons).map((page) => {
               return (
                 <ListItem key={page[0]}>
                   <ListItemIcon>{page[1]}</ListItemIcon>
