@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { QuestionMark, Login, Home, Api } from "@mui/icons-material";
+import { Header } from "../../components/Header/Header";
 
 const pagesIcons = {
   Home: <Home />,
@@ -26,6 +27,7 @@ const listOfGoals = [
 export default function About() {
   return (
     <>
+      <Header></Header>
       <Typography>About</Typography>
       <Container>
         <Paper>
