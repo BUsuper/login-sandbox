@@ -1,38 +1,41 @@
 import { Tab, Tabs, Box } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 export function Header() {
-  const [value, setValue] = useState<number>(0);
+  const loc = useLocation().pathname;
+  const [currentTab, setCurrentTab] = useState<string>(loc);
 
-  const routes = {
-    home: "/",
-    login: "/login",
-    about: "/about",
-  };
+  const routes = [
+    { title: "home", path: "/" },
+    { title: "login", path: "/login" },
+    { title: "about", path: "/about" },
+  ];
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+  /* handleChange for MUI Tabs is called with two arguments: event and new tab value
+ The _ indicates that event is intentionally left unused */
+  const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
+    setCurrentTab(newValue);
   };
 
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
-          value={value}
+          value={currentTab}
           onChange={handleChange}
           aria-label="navigation bar"
           centered
         >
-          {Object.entries(routes).map(([title, link]) => {
+          {routes.map(({ title, path }) => {
             return (
               <Tab
                 sx={{ "&:focus": { outline: "none" } }}
                 label={title.toUpperCase()}
-                value={link}
-                to={link}
+                value={path}
+                to={path}
                 component={Link}
-                key={title}
+                key={path}
               />
             );
           })}
