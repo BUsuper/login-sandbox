@@ -1,7 +1,14 @@
 import axios from "axios";
 import { Header } from "../../components";
 import { useEffect, useState } from "react";
-import { Grid, Skeleton } from "@mui/material";
+import {
+  Grid,
+  Skeleton,
+  Card,
+  Typography,
+  CardContent,
+  CardMedia,
+} from "@mui/material";
 
 export default function APITest() {
   type Character = {
@@ -13,8 +20,8 @@ export default function APITest() {
     species: string;
     type: string;
     gender: "Female" | "Male" | "Genderless" | "unknown";
-    origin: object; // Placeholder for CharacterLocation interface
-    location: object; // Placeholder for CharacterLocation interface
+    origin: { name: string; url: string }; // Placeholder for CharacterLocation interface
+    location: { name: string; url: string }; // Placeholder for CharacterLocation interface
     image: string;
     episode: string[];
   };
@@ -57,6 +64,34 @@ export default function APITest() {
   return (
     <>
       <Header />
+      {characterData ? (
+        <Grid container spacing={4}>
+          {characterData.map((character) => {
+            return (
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={character.id}>
+                <Card>
+                  <CardMedia
+                    component="img"
+                    image={character.image}
+                    alt={character.name}
+                    sx={{ height: 120, objectFit: "contain" }}
+                  />
+                  <CardContent>
+                    <Typography>{`#${character.id}`}</Typography>
+                    <Typography>{character.name}</Typography>
+                    <Typography>{`Status: ${character.status}`}</Typography>
+                    <Typography>{`Species: ${character.species}`}</Typography>
+                    <Typography>{`Gender: ${character.gender}`}</Typography>
+                    <Typography>{`Place of origin: ${character.origin.name}`}</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            );
+          })}
+        </Grid>
+      ) : (
+        <Skeleton></Skeleton>
+      )}
     </>
   );
 }
