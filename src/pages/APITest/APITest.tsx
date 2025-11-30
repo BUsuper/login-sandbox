@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Header } from "../../components";
 import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Skeleton } from "@mui/material";
 
 export default function APITest() {
   type Character = {
@@ -28,13 +28,7 @@ export default function APITest() {
     url: string
   ): Promise<Character[]> {
     try {
-      const res = await axios({
-        baseURL,
-        url,
-        method: "GET",
-      });
-
-      /* console.log(res.data); */
+      const res = await axios.get<Character[]>(url, { baseURL });
       return res.data;
     } catch (err) {
       console.error(`The request has failed with the error: ${err}`);
@@ -43,6 +37,9 @@ export default function APITest() {
   }
 
   useEffect(() => {
+    // This will be used to abort the request when the component (page) unmounts
+    const ctrl = new AbortController();
+
     (async () => {
       try {
         const data = await fetchCharacterData(BASE_URL, CHARACTER_IDS_URL);
@@ -52,14 +49,14 @@ export default function APITest() {
         throw err;
       }
     })();
+
+    // Abort the request when unmounted
+    return () => ctrl.abort();
   }, []);
 
   return (
     <>
       <Header />
-      <Grid container spacing={4}>
-        {characterData && <p>Yay, there is some data</p>}
-      </Grid>
     </>
   );
 }
