@@ -3,13 +3,19 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router";
 
 export function Header() {
+  type Routes = {
+    title: string;
+    path: string;
+  }[];
+
   const loc = useLocation().pathname;
   const [currentTab, setCurrentTab] = useState<string>(loc);
 
-  const routes = [
+  const routes: Routes = [
     { title: "home", path: "/" },
     { title: "login", path: "/login" },
     { title: "about", path: "/about" },
+    { title: "api", path: "/api" },
   ];
 
   /* handleChange for MUI Tabs is called with two arguments: event and new tab value
