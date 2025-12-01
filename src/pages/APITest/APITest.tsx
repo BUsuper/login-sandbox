@@ -64,12 +64,12 @@ export default function APITest() {
   return (
     <>
       <Header />
-      <Grid container spacing={4}>
+      <Grid container spacing={4} mt={8}>
         {characterData
           ? characterData.map((character) => {
               return (
                 <Grid size={{ xs: 12, sm: 6, md: 4 }} key={character.id}>
-                  <Card sx={{ minWidth: 220, minHeight: 400 }}>
+                  <Card sx={{ minWidth: 220, minHeight: 400, p: 2 }}>
                     <CardMedia
                       component="img"
                       image={character.image}
@@ -77,12 +77,26 @@ export default function APITest() {
                       sx={{ height: 120, objectFit: "contain" }}
                     />
                     <CardContent>
-                      <Typography>{`#${character.id}`}</Typography>
-                      <Typography>{character.name}</Typography>
-                      <Typography>{`Status: ${character.status}`}</Typography>
-                      <Typography>{`Species: ${character.species}`}</Typography>
-                      <Typography>{`Gender: ${character.gender}`}</Typography>
-                      <Typography>{`Place of origin: ${character.origin.name}`}</Typography>
+                      <Typography
+                        variant="h4"
+                        mb={2}
+                      >{`#${character.id} ${character.name}`}</Typography>
+                      <Typography
+                        align="left"
+                        variant="h6"
+                      >{`Status: ${character.status}`}</Typography>
+                      <Typography
+                        align="left"
+                        variant="h6"
+                      >{`Species: ${character.species}`}</Typography>
+                      <Typography
+                        align="left"
+                        variant="h6"
+                      >{`Gender: ${character.gender}`}</Typography>
+                      <Typography
+                        align="left"
+                        variant="h6"
+                      >{`Place of origin: ${character.origin.name}`}</Typography>
                     </CardContent>
                   </Card>
                 </Grid>
