@@ -1,10 +1,17 @@
 import { Box, Button, TextField } from "@mui/material";
 import { Header } from "../../components/";
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useContext, useState, type ChangeEvent, type FormEvent } from "react";
+import axios from "axios";
+import { UserContext } from "../../context/UserContext";
 
 export default function Login() {
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
+  const { currentUser, setCurrentUser } = useContext(UserContext);
+
+  console.log(`Current user: ${currentUser}`);
+
+  const DUMMY_API_URL = "https://dummyjson.com/auth/login";
 
   function handleUsernameInputChange(e: ChangeEvent<HTMLInputElement>): void {
     setUsernameInput(e.target.value);
@@ -17,6 +24,32 @@ export default function Login() {
   function handleSubmit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     console.log(`Login: ${usernameInput}\nPassword: ${passwordInput}`);
+    axios
+      .post(
+        DUMMY_API_URL, // URL
+        {
+          username: usernameInput, //body
+          password: passwordInput,
+        },
+        {
+          headers: { "Content-Type": "application/json" }, // config
+          /*withCredentials: true,  */ // This is not allowed with the current CORS that allows all sources
+        }
+      )
+      .then((res) => {
+        res.status === 200
+          ? setCurrentUser({
+              email: res.data.email,
+              firstName: res.data.firstName,
+              gender: res.data.gender,
+              id: res.data.id,
+              image: res.data.image,
+              lastName: res.data.lastName,
+              username: res.data.username,
+            })
+          : setCurrentUser(null);
+      })
+      .catch(console.error);
   }
 
   return (
@@ -56,7 +89,12 @@ export default function Login() {
         >
           Login
         </Button>
-        <Button id="signupButton" variant="outlined" sx={{ width: 90 }}>
+        <Button
+          id="signupButton"
+          variant="outlined"
+          disabled
+          sx={{ width: 90 }}
+        >
           Sign up
         </Button>
       </Box>
