@@ -3,11 +3,13 @@ import { Header } from "../../components/";
 import { useContext, useState, type ChangeEvent, type FormEvent } from "react";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
+import { TokenContext } from "../../context/TokenContext";
 
 export default function Login() {
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
   const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { setAccessToken } = useContext(TokenContext);
 
   console.log(`Current user: ${currentUser}`);
 
@@ -37,17 +39,20 @@ export default function Login() {
         }
       )
       .then((res) => {
-        res.status === 200
-          ? setCurrentUser({
-              email: res.data.email,
-              firstName: res.data.firstName,
-              gender: res.data.gender,
-              id: res.data.id,
-              image: res.data.image,
-              lastName: res.data.lastName,
-              username: res.data.username,
-            })
-          : setCurrentUser(null);
+        if (res.status === 200) {
+          setCurrentUser({
+            email: res.data.email,
+            firstName: res.data.firstName,
+            gender: res.data.gender,
+            id: res.data.id,
+            image: res.data.image,
+            lastName: res.data.lastName,
+            username: res.data.username,
+          });
+          setAccessToken(res.data.accessToken);
+        } else {
+          setCurrentUser(null);
+        }
       })
       .catch(console.error);
   }

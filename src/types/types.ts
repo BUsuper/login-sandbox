@@ -12,3 +12,8 @@ export type UserContextValues = {
   currentUser: User | null;
   setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
 };
+
+export type TokenContextValues = {
+  accessToken: string | null;
+  setAccessToken: React.Dispatch<React.SetStateAction<string | null>>;
+};
