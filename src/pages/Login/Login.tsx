@@ -1,9 +1,9 @@
 import { Box, Button, TextField } from "@mui/material";
 import { Header } from "../../components/";
 import { useContext, useState, type ChangeEvent, type FormEvent } from "react";
-import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 import { TokenContext } from "../../context/TokenContext";
+import { login } from "../../utils/auth";
 
 export default function Login() {
   const [usernameInput, setUsernameInput] = useState<string>("");
@@ -12,8 +12,6 @@ export default function Login() {
   const { setAccessToken } = useContext(TokenContext);
 
   console.log(`Current user: ${currentUser}`);
-
-  const DUMMY_API_URL = "https://dummyjson.com/auth/login";
 
   function handleUsernameInputChange(e: ChangeEvent<HTMLInputElement>): void {
     setUsernameInput(e.target.value);
@@ -26,35 +24,7 @@ export default function Login() {
   function handleSubmit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     console.log(`Login: ${usernameInput}\nPassword: ${passwordInput}`);
-    axios
-      .post(
-        DUMMY_API_URL, // URL
-        {
-          username: usernameInput, //body
-          password: passwordInput,
-        },
-        {
-          headers: { "Content-Type": "application/json" }, // config
-          /*withCredentials: true,  */ // This is not allowed with the current CORS that allows all sources
-        }
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          setCurrentUser({
-            email: res.data.email,
-            firstName: res.data.firstName,
-            gender: res.data.gender,
-            id: res.data.id,
-            image: res.data.image,
-            lastName: res.data.lastName,
-            username: res.data.username,
-          });
-          setAccessToken(res.data.accessToken);
-        } else {
-          setCurrentUser(null);
-        }
-      })
-      .catch(console.error);
+    login(usernameInput, passwordInput, setAccessToken, setCurrentUser);
   }
 
   return (
