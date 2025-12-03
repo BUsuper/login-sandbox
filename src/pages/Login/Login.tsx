@@ -1,15 +1,18 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { Header } from "../../components/";
 import { useContext, useState, type ChangeEvent, type FormEvent } from "react";
 import { UserContext } from "../../context/UserContext";
 import { TokenContext } from "../../context/TokenContext";
 import { login } from "../../utils/auth";
+import { useNavigate } from "react-router";
 
 export default function Login() {
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
+  const [isLoginError, setIsLoginError] = useState<boolean>(false);
   const { currentUser, setCurrentUser } = useContext(UserContext);
   const { setAccessToken } = useContext(TokenContext);
+  const navigate = useNavigate();
 
   console.log(`Current user: ${currentUser}`);
 
@@ -21,10 +24,26 @@ export default function Login() {
     setPasswordInput(e.target.value);
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>): void {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
     console.log(`Login: ${usernameInput}\nPassword: ${passwordInput}`);
-    login(usernameInput, passwordInput, setAccessToken, setCurrentUser);
+    try {
+      const success = await login(
+        usernameInput,
+        passwordInput,
+        setAccessToken,
+        setCurrentUser
+      );
+      if (success) {
+        navigate("/");
+      } else {
+        setIsLoginError(true);
+        setUsernameInput("");
+        setPasswordInput("");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
@@ -72,6 +91,11 @@ export default function Login() {
         >
           Sign up
         </Button>
+        {isLoginError && (
+          <Typography variant="body1" color="red">
+            Wrong password or username
+          </Typography>
+        )}
       </Box>
     </>
   );
