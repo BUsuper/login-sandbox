@@ -58,7 +58,7 @@ export async function login(
   passwordInput: string,
   setAccessToken: React.Dispatch<React.SetStateAction<string | null>>,
   setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>
-) {
+): Promise<boolean> {
   try {
     const res = await axios.post(
       LOGIN_URL, // URL
@@ -85,11 +85,14 @@ export async function login(
       setAccessToken(res.data.accessToken);
       // This is not great, but the CORS won't allow sending the HTTPOnly cookie
       sessionStorage.setItem("refreshToken", res.data.refreshToken);
+      return true;
     } else {
       setCurrentUser(null);
+      return false;
     }
   } catch (err) {
     console.error(err);
+    return false;
   }
 }
 
