@@ -10,7 +10,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   useEffect(() => {
-    refresh(setAccessToken, setCurrentUser);
+    const refreshToken = sessionStorage.getItem("refreshToken");
+    if (refreshToken) {
+      refresh(setAccessToken, setCurrentUser, refreshToken);
+    }
   }, []);
 
   return (
