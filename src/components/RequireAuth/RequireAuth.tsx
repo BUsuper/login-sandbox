@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router";
 import { useAuth } from "../../hooks";
+import { useEffect } from "react";
 import type { ReactNode } from "react";
 
 export function RequireAuth({ children }: { children: ReactNode }) {
@@ -7,9 +8,13 @@ export function RequireAuth({ children }: { children: ReactNode }) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  if (!user) {
-    navigate("/login", { state: location, replace: true });
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate("/login", { state: location, replace: true });
+    }
+  }, [user, location, navigate]);
+
+  if (!user) return null;
 
   return children;
 }
