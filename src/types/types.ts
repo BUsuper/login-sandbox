@@ -8,9 +8,24 @@ export type User = {
   username: string;
 };
 
+export type Character = {
+  id: number;
+  name: string;
+  url: string;
+  created: string;
+  status: "Dead" | "Alive" | "unknown";
+  species: string;
+  type: string;
+  gender: "Female" | "Male" | "Genderless" | "unknown";
+  origin: { name: string; url: string }; // Placeholder for CharacterLocation interface
+  location: { name: string; url: string }; // Placeholder for CharacterLocation interface
+  image: string;
+  episode: string[];
+};
+
 export type UserContextValues = {
-  currentUser: User | null;
-  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
+  currentUser: User | null | undefined;
+  setCurrentUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
 };
 
 export type TokenContextValues = {
