@@ -9,23 +9,9 @@ import {
   CardContent,
   CardMedia,
 } from "@mui/material";
+import type { Character } from "../../types/types";
 
 export default function APITest() {
-  type Character = {
-    id: number;
-    name: string;
-    url: string;
-    created: string;
-    status: "Dead" | "Alive" | "unknown";
-    species: string;
-    type: string;
-    gender: "Female" | "Male" | "Genderless" | "unknown";
-    origin: { name: string; url: string }; // Placeholder for CharacterLocation interface
-    location: { name: string; url: string }; // Placeholder for CharacterLocation interface
-    image: string;
-    episode: string[];
-  };
-
   const [characterData, setCharactersData] = useState<Character[] | null>(null);
   const BASE_URL = "https://rickandmortyapi.com/api";
   const characterIds = [1, 2, 3, 4, 5, 10, 22];
