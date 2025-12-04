@@ -2,6 +2,7 @@ import "./App.css";
 import { Route, Routes } from "react-router";
 import { Home, About, Login, APITest } from "../pages/";
 import { AuthProvider } from "../providers";
+import { RequireAuth } from "../components";
 
 function App() {
   return (
@@ -10,7 +11,14 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/api" element={<APITest />} />
+        <Route
+          path="/api"
+          element={
+            <RequireAuth>
+              <APITest />
+            </RequireAuth>
+          }
+        />
       </Routes>
     </AuthProvider>
   );
