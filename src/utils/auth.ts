@@ -8,7 +8,7 @@ const CURRENT_USER_URL = "https://dummyjson.com/auth/me";
 // Pass setters to it
 export async function refresh(
   setAccessToken: React.Dispatch<React.SetStateAction<string | null>>,
-  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>,
+  setCurrentUser: React.Dispatch<React.SetStateAction<User | null | undefined>>,
   refreshToken?: string
 ) {
   try {
@@ -23,7 +23,7 @@ export async function refresh(
     );
     setAccessToken(res.data.accessToken);
     sessionStorage.setItem("refreshToken", res.data.refreshToken);
-    getCurrentAuthUser(setCurrentUser, res.data.accessToken);
+    setCurrentAuthUser(setCurrentUser, res.data.accessToken);
   } catch (err) {
     console.log(err);
     setAccessToken(null);
@@ -31,8 +31,8 @@ export async function refresh(
   }
 }
 
-export async function getCurrentAuthUser(
-  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>,
+export async function setCurrentAuthUser(
+  setCurrentUser: React.Dispatch<React.SetStateAction<User | null | undefined>>,
   accessToken: string
 ) {
   try {
@@ -96,6 +96,11 @@ export async function login(
   }
 }
 
-export async function logout() {
-  // TODO: clear refresh and access tokens, user
+export async function logout(
+  setAccessToken: React.Dispatch<React.SetStateAction<string | null>>,
+  setCurrentUser: React.Dispatch<React.SetStateAction<User | null | undefined>>
+) {
+  setCurrentUser(null);
+  setAccessToken(null);
+  sessionStorage.removeItem("refreshToken");
 }
