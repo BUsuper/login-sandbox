@@ -57,7 +57,7 @@ export async function login(
   usernameInput: string,
   passwordInput: string,
   setAccessToken: React.Dispatch<React.SetStateAction<string | null>>,
-  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>
+  setCurrentUser: React.Dispatch<React.SetStateAction<User | null | undefined>>
 ): Promise<boolean> {
   try {
     const res = await axios.post(
