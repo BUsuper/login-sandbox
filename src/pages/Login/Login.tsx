@@ -4,17 +4,17 @@ import { useContext, useState, type ChangeEvent, type FormEvent } from "react";
 import { UserContext } from "../../context/UserContext";
 import { TokenContext } from "../../context/TokenContext";
 import { login } from "../../utils/auth";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 export default function Login() {
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
   const [isLoginError, setIsLoginError] = useState<boolean>(false);
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { setCurrentUser } = useContext(UserContext);
   const { setAccessToken } = useContext(TokenContext);
   const navigate = useNavigate();
-
-  console.log(`Current user: ${currentUser}`);
+  const location = useLocation();
+  const pathname = location.state.pathname || "/";
 
   function handleUsernameInputChange(e: ChangeEvent<HTMLInputElement>): void {
     setUsernameInput(e.target.value);
@@ -26,7 +26,6 @@ export default function Login() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
-    console.log(`Login: ${usernameInput}\nPassword: ${passwordInput}`);
     try {
       const success = await login(
         usernameInput,
@@ -35,7 +34,7 @@ export default function Login() {
         setCurrentUser
       );
       if (success) {
-        navigate("/");
+        navigate({ pathname });
       } else {
         setIsLoginError(true);
         setUsernameInput("");
