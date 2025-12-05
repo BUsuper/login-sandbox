@@ -1,6 +1,7 @@
 import { Tab, Tabs, Box } from "@mui/material";
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
+import { useAuth } from "../../hooks";
 
 export function Header() {
   type Routes = {
@@ -10,10 +11,12 @@ export function Header() {
 
   const loc = useLocation().pathname;
   const [currentTab, setCurrentTab] = useState<string>(loc);
+  const isUserLoggedIn = !!useAuth();
 
   const routes: Routes = [
     { title: "home", path: "/" },
     { title: "login", path: "/login" },
+    { title: "logout", path: "/logout" },
     { title: "about", path: "/about" },
     { title: "api", path: "/api" },
   ];
@@ -34,9 +37,22 @@ export function Header() {
           centered
         >
           {routes.map(({ title, path }) => {
+            const isHidden =
+              (isUserLoggedIn && path === "/login") ||
+              (!isUserLoggedIn && path === "/logout");
+
             return (
               <Tab
-                sx={{ "&:focus": { outline: "none" } }}
+                sx={{
+                  "&:focus": { outline: "none" },
+                  width: isHidden ? 0 : undefined,
+                  minWidth: isHidden ? 0 : undefined,
+                  padding: isHidden ? 0 : undefined,
+                  overflow: "hidden",
+                  opacity: isHidden ? 0 : 1,
+                }}
+                tabIndex={isHidden ? -1 : 0}
+                aria-hidden={isHidden}
                 label={title.toUpperCase()}
                 value={path}
                 to={path}
