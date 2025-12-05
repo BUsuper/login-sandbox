@@ -28,41 +28,49 @@ export function Header() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={currentTab}
-          onChange={handleChange}
-          aria-label="navigation bar"
-          centered
-        >
-          {routes.map(({ title, path }) => {
-            const isHidden =
-              (isUserLoggedIn && path === "/login") ||
-              (!isUserLoggedIn && path === "/logout");
+    <Box
+      id="header"
+      sx={{
+        borderBottom: 1,
+        borderColor: "divider",
+        width: "100%",
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+      }}
+    >
+      <Tabs
+        value={currentTab}
+        onChange={handleChange}
+        aria-label="navigation bar"
+        centered
+      >
+        {routes.map(({ title, path }) => {
+          const isHidden =
+            (isUserLoggedIn && path === "/login") ||
+            (!isUserLoggedIn && path === "/logout");
 
-            return (
-              <Tab
-                sx={{
-                  "&:focus": { outline: "none" },
-                  width: isHidden ? 0 : undefined,
-                  minWidth: isHidden ? 0 : undefined,
-                  padding: isHidden ? 0 : undefined,
-                  overflow: "hidden",
-                  opacity: isHidden ? 0 : 1,
-                }}
-                tabIndex={isHidden ? -1 : 0}
-                aria-hidden={isHidden}
-                label={title.toUpperCase()}
-                value={path}
-                to={path}
-                component={Link}
-                key={path}
-              />
-            );
-          })}
-        </Tabs>
-      </Box>
+          return (
+            <Tab
+              sx={{
+                "&:focus": { outline: "none" },
+                width: isHidden ? 0 : undefined,
+                minWidth: isHidden ? 0 : undefined,
+                padding: isHidden ? 0 : undefined,
+                overflow: "hidden",
+                opacity: isHidden ? 0 : 1,
+              }}
+              tabIndex={isHidden ? -1 : 0}
+              aria-hidden={isHidden}
+              label={title.toUpperCase()}
+              value={path}
+              to={path}
+              component={Link}
+              key={path}
+            />
+          );
+        })}
+      </Tabs>
     </Box>
   );
 }
