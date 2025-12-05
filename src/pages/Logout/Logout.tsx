@@ -19,7 +19,13 @@ export function Logout() {
   return (
     <>
       <Header />
-      <Button onClick={handleClick}>Logout</Button>
+      <Button
+        onClick={handleClick}
+        variant="outlined"
+        sx={{ my: 2, width: 90 }}
+      >
+        Logout
+      </Button>
     </>
   );
 }
