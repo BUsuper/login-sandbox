@@ -1,4 +1,4 @@
-import { Typography, Link, Skeleton } from "@mui/material";
+import { Typography, Box, Link, Skeleton } from "@mui/material";
 import { Header } from "../../components/";
 import { Link as RouterLink } from "react-router";
 import { useContext } from "react";
@@ -10,8 +10,16 @@ export default function Home() {
   return currentUser === undefined ? (
     <>
       <Header />
-      <Skeleton></Skeleton>
-      <Skeleton></Skeleton>
+      <Box
+        display="flex"
+        alignItems="center"
+        flexDirection="column"
+        gap={4}
+        mt={4}
+      >
+        <Skeleton width={430} height={70}></Skeleton>
+        <Skeleton width={270} height={28}></Skeleton>
+      </Box>
     </>
   ) : (
     <>
