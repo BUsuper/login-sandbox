@@ -24,7 +24,7 @@ const listOfGoals = [
   "Using axios to fetch data",
 ];
 
-export default function About() {
+export function About() {
   return (
     <>
       <Header />

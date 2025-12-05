@@ -6,7 +6,7 @@ import { TokenContext } from "../../context/TokenContext";
 import { login } from "../../utils/auth";
 import { useLocation, useNavigate } from "react-router";
 
-export default function Login() {
+export function Login() {
   const [usernameInput, setUsernameInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
   const [isLoginError, setIsLoginError] = useState<boolean>(false);

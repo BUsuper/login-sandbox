@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 
-export default function Home() {
+export function Home() {
   const { currentUser } = useContext(UserContext);
 
   return currentUser === undefined ? (

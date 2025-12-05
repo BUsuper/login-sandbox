@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import type { Character } from "../../types/types";
 
-export default function APITest() {
+export function APITest() {
   const [characterData, setCharactersData] = useState<Character[] | null>(null);
   const BASE_URL = "https://rickandmortyapi.com/api";
   const characterIds = [1, 2, 3, 4, 5, 10, 22];
