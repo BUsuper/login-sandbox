@@ -14,7 +14,7 @@ export default function Login() {
   const { setAccessToken } = useContext(TokenContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const pathname = location.state.pathname || "/";
+  const pathname = location.state?.pathname || "/";
 
   function handleUsernameInputChange(e: ChangeEvent<HTMLInputElement>): void {
     setUsernameInput(e.target.value);
