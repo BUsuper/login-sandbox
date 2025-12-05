@@ -10,7 +10,7 @@ export async function refresh(
   setAccessToken: React.Dispatch<React.SetStateAction<string | null>>,
   setCurrentUser: React.Dispatch<React.SetStateAction<User | null | undefined>>,
   refreshToken?: string
-) {
+): Promise<void> {
   try {
     // Send the refresh token manually
     // withCredentials won't work (sending a cookie isn't allowed by the browser - CORS issue)
@@ -34,7 +34,7 @@ export async function refresh(
 export async function setCurrentAuthUser(
   setCurrentUser: React.Dispatch<React.SetStateAction<User | null | undefined>>,
   accessToken: string
-) {
+): Promise<void> {
   try {
     const res = await axios.get(CURRENT_USER_URL, {
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -99,7 +99,7 @@ export async function login(
 export async function logout(
   setAccessToken: React.Dispatch<React.SetStateAction<string | null>>,
   setCurrentUser: React.Dispatch<React.SetStateAction<User | null | undefined>>
-) {
+): Promise<void> {
   setCurrentUser(null);
   setAccessToken(null);
   sessionStorage.removeItem("refreshToken");
