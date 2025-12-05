@@ -1,11 +1,10 @@
 import { Typography, Box, Link, Skeleton } from "@mui/material";
 import { Header } from "../../components/";
 import { Link as RouterLink } from "react-router";
-import { useContext } from "react";
-import { UserContext } from "../../context/UserContext";
+import { useAuth } from "../../hooks";
 
 export function Home() {
-  const { currentUser } = useContext(UserContext);
+  const currentUser = useAuth();
 
   return currentUser === undefined ? (
     <>
