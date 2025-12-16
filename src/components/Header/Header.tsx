@@ -2,6 +2,7 @@ import { Tab, Tabs, Box } from "@mui/material";
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
 import { useAuth } from "../../hooks";
+import { useTheme } from "@mui/material/styles";
 
 export function Header() {
   type Routes = {
@@ -9,6 +10,7 @@ export function Header() {
     path: string;
   }[];
 
+  const theme = useTheme();
   const loc = useLocation().pathname;
   const [currentTab, setCurrentTab] = useState<string>(loc);
   const isUserLoggedIn = !!useAuth();
@@ -37,6 +39,7 @@ export function Header() {
         position: "sticky",
         top: 0,
         zIndex: 100,
+        backgroundColor: theme.palette.background.default,
       }}
     >
       <Tabs
