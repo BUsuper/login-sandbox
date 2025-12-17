@@ -12,7 +12,7 @@ import { Header } from "../../components/";
 
 const pagesIcons = {
   Home: <Home />,
-  Login: <Login />,
+  "Login/Logout": <Login />,
   API: <Api />,
   About: <QuestionMark />,
 };
