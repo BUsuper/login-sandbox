@@ -1,7 +1,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 // This is necessary for the vite svgr plugin to work with TS
 
-import { Box, Button, SvgIcon } from "@mui/material";
+import { Box, Button, SvgIcon, Typography } from "@mui/material";
 import { Header } from "../../components";
 import { logout } from "../../utils/auth";
 import { useContext } from "react";
@@ -40,6 +40,9 @@ export function Logout() {
           }}
           component={Warning}
         />
+        <Typography variant="h4" my={4}>
+          Are you sure you want to logout?
+        </Typography>
         <Button
           onClick={handleClick}
           variant="outlined"
